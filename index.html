@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>宝石の煌き ONLINE v1.4</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>宝石の煌き ONLINE v1.5</title><style>
 :root{--bg:#07131a;--panel:#10222c;--line:#2d4a56;--text:#edf7f7;--muted:#9db3b8;--accent:#e1b95a;--white:#f4f0e7;--blue:#4088ff;--green:#37b66d;--red:#df4d56;--black:#25262b;--gold:#d7aa39}
 *{box-sizing:border-box}html,body{height:100%;margin:0;background:radial-gradient(circle at 50% 0,#12313c 0,#07131a 55%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
 button{font:inherit;color:inherit}button:disabled{opacity:.35;cursor:not-allowed!important}
@@ -500,10 +500,132 @@ text-align:center;pointer-events:none;opacity:0;
   .statusbox{grid-template-rows:16px minmax(0,1fr)}
 }
 
+
+/* ===== v1.5 UI refinements ===== */
+
+/* Selected development card should be a proper large preview. */
+.modal-card{
+  width:210px;
+  height:270px;
+}
+.modal-card > .devcard{
+  width:100%;
+  height:100%;
+}
+.modal-card .card-vp{font-size:32px}
+.modal-card .card-bonus{width:44px;height:44px;font-size:24px}
+.modal-card .card-level{font-size:12px}
+.modal-card .costs{left:10px;bottom:10px;gap:6px}
+.modal-card .cost{width:34px;height:34px;font-size:14px}
+
+/* Bottom action panel now owns token controls. */
+.status-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+.status-actions .actionbtn{
+  min-width:0;
+}
+
+/* Smartphone refinements */
+@media (max-width:650px){
+  /* Bank no longer needs vertical space for action buttons. */
+  .main{
+    grid-template-rows:92px minmax(0,1fr) 54px;
+  }
+  .bank{
+    padding:3px 3px 4px;
+  }
+  .tokenlist{
+    height:35px;
+    flex:0 0 35px;
+  }
+
+  /* B/T rows use identical fixed columns, preventing horizontal drift. */
+  .player .minirow{
+    display:grid;
+    grid-template-columns:13px repeat(6,20px);
+    column-gap:2px;
+    align-items:center;
+    justify-content:start;
+    width:max-content;
+    max-width:100%;
+  }
+  .player .minirow .rowlabel{
+    width:13px;
+    min-width:13px;
+  }
+  .player .minirow .mini-gem{
+    width:20px;
+    min-width:20px;
+    max-width:20px;
+    height:14px;
+    padding:1px 1px;
+    display:flex;
+    justify-content:center;
+    flex:none;
+  }
+
+  /* Large card preview in selection modal, independent from tiny market cards. */
+  .modal-card{
+    width:176px;
+    height:226px;
+    margin:8px auto 10px;
+  }
+  .modal-card > .devcard{
+    width:100%!important;
+    height:100%!important;
+    padding:9px!important;
+    border-radius:12px!important;
+  }
+  .modal-card .card-vp{font-size:28px!important}
+  .modal-card .card-bonus{
+    width:40px!important;
+    height:40px!important;
+    font-size:21px!important;
+  }
+  .modal-card .card-level{font-size:10px!important}
+  .modal-card .costs{
+    left:8px!important;
+    bottom:8px!important;
+    gap:5px!important;
+  }
+  .modal-card .cost{
+    width:31px!important;
+    height:31px!important;
+    font-size:13px!important;
+  }
+
+  /* Hand-status area: message on left, two gem buttons on right. */
+  .statusbox{
+    grid-template-columns:minmax(0,1fr) 154px;
+  }
+  .status-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:3px;
+  }
+  .status-actions .actionbtn{
+    width:auto;
+    height:100%;
+    padding:3px 2px;
+    font-size:8px;
+    line-height:1.15;
+  }
+}
+
+@media (max-width:650px) and (max-height:720px){
+  .main{grid-template-rows:78px minmax(0,1fr) 48px}
+  .tokenlist{height:30px;flex-basis:30px}
+  .modal-card{width:162px;height:208px}
+  .statusbox{grid-template-columns:minmax(0,1fr) 148px}
+}
+
 </style></head><body>
-<div id="app"><header class="topbar"><div class="title">宝石の煌き <small>ONLINE v1.4</small></div><div class="room-tag" id="roomTag">未入室</div><div id="turnPill" class="turnpill">準備中</div><span class="room-tag"><span id="connDot" class="connection-dot"></span><span id="connText">未接続</span></span><button id="logBtn" class="topbtn">ログ</button><button id="ruleBtn" class="topbtn">ルール</button><button id="restartBtn" class="topbtn">部屋初期化</button></header>
-<main class="main"><aside class="panel sidebar"><div class="section-title">Players</div><div id="players" class="players"></div></aside><section class="panel board"><div><div class="section-title">貴族</div><div id="nobles" class="nobles-wrap"></div></div><div class="tiers" id="tiers"></div></section><aside class="panel bank"><div class="section-title">宝石バンク</div><div class="bank-help">自分のターンでは宝石をクリック。異なる3色、または在庫4枚以上の同色2枚です。</div><div id="tokenList" class="tokenlist"></div><div class="take-controls"><button id="clearTake" class="actionbtn">選択解除</button><button id="confirmTake" class="actionbtn primary">宝石を取る</button></div></aside></main>
-<section class="bottom"><div class="panel myarea"><div class="statsgrid"><div class="bigscore"><b id="myScore">0</b><span>威信ポイント</span></div><div><div class="section-title">永久ボーナス</div><div id="myBonus" class="my-bonus"></div></div><div><div class="section-title">所持トークン</div><div id="myGems" class="my-gems"></div></div></div><div class="reserved"><div class="section-title">予約カード <span id="reserveCount">0/3</span></div><div id="reservedList" class="reserved-list"></div></div></div><div class="panel statusbox"><div id="statusMain" class="status-main">部屋へ入室してください</div><div id="statusSub" class="status-sub">オンライン対戦版です。</div><div class="status-actions"><button id="cancelSelect" class="actionbtn">選択解除</button></div></div></section></div>
+<div id="app"><header class="topbar"><div class="title">宝石の煌き <small>ONLINE v1.5</small></div><div class="room-tag" id="roomTag">未入室</div><div id="turnPill" class="turnpill">準備中</div><span class="room-tag"><span id="connDot" class="connection-dot"></span><span id="connText">未接続</span></span><button id="logBtn" class="topbtn">ログ</button><button id="ruleBtn" class="topbtn">ルール</button><button id="restartBtn" class="topbtn">部屋初期化</button></header>
+<main class="main"><aside class="panel sidebar"><div class="section-title">Players</div><div id="players" class="players"></div></aside><section class="panel board"><div><div class="section-title">貴族</div><div id="nobles" class="nobles-wrap"></div></div><div class="tiers" id="tiers"></div></section><aside class="panel bank"><div class="section-title">宝石バンク</div><div class="bank-help">自分のターンでは宝石をクリック。異なる3色、または在庫4枚以上の同色2枚です。</div><div id="tokenList" class="tokenlist"></div></aside></main>
+<section class="bottom"><div class="panel myarea"><div class="statsgrid"><div class="bigscore"><b id="myScore">0</b><span>威信ポイント</span></div><div><div class="section-title">永久ボーナス</div><div id="myBonus" class="my-bonus"></div></div><div><div class="section-title">所持トークン</div><div id="myGems" class="my-gems"></div></div></div><div class="reserved"><div class="section-title">予約カード <span id="reserveCount">0/3</span></div><div id="reservedList" class="reserved-list"></div></div></div><div class="panel statusbox"><div id="statusMain" class="status-main">部屋へ入室してください</div><div id="statusSub" class="status-sub">オンライン対戦版です。</div><div class="status-actions"><button id="clearTake" class="actionbtn">選択解除</button><button id="confirmTake" class="actionbtn primary">宝石を取る</button></div></div></section></div>
 <div id="pendingBanner" class="pending-banner"></div><div id="scorePop" class="score-pop"><div class="name"></div><div class="gain"></div></div><div id="modalBack" class="modalback"><div id="modal" class="modal"></div></div>
 <div id="startScreen" class="online-start"><div class="online-card"><h1>宝石の煌き ONLINE</h1><div class="online-note">固定4部屋 / オンライン対戦<br>同じ部屋へ入ったプレイヤー同士で対戦します。</div><div style="display:flex;justify-content:flex-end;margin:10px 0"><button class="actionbtn" id="refreshRooms" style="flex:0 0 auto">更新</button></div><input id="playerName" class="name-input" maxlength="14" placeholder="プレイヤー名"><div class="section-title" style="margin:14px 0 7px">ROOMS</div><div id="rooms" class="rooms"></div><div id="roomHint" class="online-note" style="margin-top:10px">部屋情報を取得中…</div></div></div>
 <div id="lobbyScreen" class="lobby-screen"><div class="lobby-card"><div class="lobby-title"><h2 id="lobbyRoom">部屋</h2><span id="lobbyBadge" class="badge"></span></div><div class="online-note" style="text-align:left;margin-top:6px">2～4人で開始できます。ホストはCPUを追加できます。</div><div id="lobbyPlayers" class="lobby-players"></div><div id="hostControls" class="lobby-controls"><button id="addCpuBtn" class="actionbtn">CPU追加</button><button id="startGameBtn" class="actionbtn primary">ゲーム開始</button></div><div class="lobby-controls" style="margin-top:8px"><button id="leaveLobbyBtn" class="actionbtn">退室</button></div></div></div>
@@ -578,7 +700,7 @@ function promptDiscard(){if($('#modalBack').classList.contains('show'))return;co
 function promptNoble(){if($('#modalBack').classList.contains('show'))return;const choices=S.nobles.filter(n=>S.pending.choices.includes(n.id));openModal(`<h2>訪問する貴族を選択</h2><div class="choice-list">${choices.map(n=>`<div class="noble" data-noble="${n.id}"><span class="crown">♛</span><span class="vp">3</span><div class="reqs">${reqHtml(n)}</div></div>`).join('')}</div>`);$$('[data-noble]').forEach(el=>el.onclick=()=>{send('choose_noble',{nobleId:el.dataset.noble});$('#modalBack').classList.remove('show')})}
 function showGameOver(){if($('#modalBack').classList.contains('show'))return;const winners=S.players.filter(p=>S.winnerIds.includes(p.id));openModal(`<div class="gameover-box"><h2>ゲーム終了</h2><div class="winner">${winners.map(x=>escapeHtml(x.name)).join('・')} の勝利</div><p>${S.players.map(p=>`<b>${escapeHtml(p.name)}</b>：${p.score}点（購入${p.cardsCount}枚）`).join('<br>')}</p><div class="modal-actions"><button class="actionbtn" id="mClose">盤面を見る</button><button class="actionbtn danger" id="resetNow">部屋を初期化</button></div></div>`);$('#mClose').onclick=()=>$('#modalBack').classList.remove('show');$('#resetNow').onclick=resetCurrentRoom}
 async function resetCurrentRoom(){if(!confirm(`部屋${ROOM}を初期化しますか？`))return;await fetch(`${baseURL()}/api/room/${ROOM}/reset`,{method:'POST'})}
-$('#confirmTake').onclick=()=>{if(!validTake())return toast('選び方がルールに合っていません');send('take',{tokens:takeSel});takeSel={}};$('#clearTake').onclick=$('#cancelSelect').onclick=()=>{takeSel={};if(S?.phase==='game')renderGame()};
+$('#confirmTake').onclick=()=>{if(!validTake())return toast('選び方がルールに合っていません');send('take',{tokens:takeSel});takeSel={}};$('#clearTake').onclick=()=>{takeSel={};if(S?.phase==='game')renderGame()};
 $('#logBtn').onclick=()=>{const entries=S?.logs?.length?S.logs.map(x=>`<div class="log-entry">${escapeHtml(x)}</div>`).join(''):'<div class="log-entry">まだログはありません</div>';openModal(`<h2>進行ログ</h2><div class="log-modal">${entries}</div><div class="modal-actions"><button class="actionbtn primary" id="mClose">閉じる</button></div>`);$('#mClose').onclick=closeModal};
 $('#ruleBtn').onclick=()=>{openModal(`<h2>基本ルール</h2><p><b>1手番1アクション：</b>異なる3色取得／同色2枚（取得前に4枚以上）／予約／購入。</p><p>予約は3枚まで、トークンは黄金を含め手番終了時10枚まで。貴族は条件達成で3点。誰かが15点以上になったラウンドの終了時にゲーム終了です。</p><div class="modal-actions"><button class="actionbtn primary" id="mClose">閉じる</button></div>`);$('#mClose').onclick=closeModal};
 $('#restartBtn').onclick=resetCurrentRoom;$('#refreshRooms').onclick=fetchRooms;$('#addCpuBtn').onclick=()=>send('add_cpu');$('#startGameBtn').onclick=()=>send('start');$('#leaveLobbyBtn').onclick=leaveLobby;
