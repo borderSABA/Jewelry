@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>宝石の煌き ONLINE v1.8</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>宝石の煌き ONLINE v1.9</title><style>
 :root{--bg:#07131a;--panel:#10222c;--line:#2d4a56;--text:#edf7f7;--muted:#9db3b8;--accent:#e1b95a;--white:#f4f0e7;--blue:#4088ff;--green:#37b66d;--red:#df4d56;--black:#25262b;--gold:#d7aa39}
 *{box-sizing:border-box}html,body{height:100%;margin:0;background:radial-gradient(circle at 50% 0,#12313c 0,#07131a 55%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
 button{font:inherit;color:inherit}button:disabled{opacity:.35;cursor:not-allowed!important}
@@ -1045,10 +1045,87 @@ text-align:center;pointer-events:none;opacity:0;
   }
 }
 
+
+/* ===== v1.9 public player info / token totals / affordable highlight ===== */
+.player{cursor:pointer}
+.player:hover{border-color:#567985}
+.token-total{
+  flex:0 0 auto;padding:3px 6px;border:1px solid #3d5b66;border-radius:999px;
+  background:#091a21;color:#d6e8eb;font-size:10px;font-weight:900;white-space:nowrap
+}
+.reserve-badge{
+  display:none;flex:0 0 auto;padding:2px 5px;border:1px solid #675a3c;border-radius:999px;
+  background:#2a2417;color:#f0cf76;font-size:9px;font-weight:900;white-space:nowrap
+}
+.my-token-total{margin-left:5px;color:#f0cf76;font-size:12px;font-weight:950}
+.token-section-title{white-space:nowrap}
+
+/* Stronger affordable-card emphasis */
+.devcard.affordable{
+  border-color:#83ffb7!important;
+  box-shadow:0 0 0 3px #5dffa1 inset,0 0 16px #55ff9a99,0 6px 14px #0006!important;
+  filter:brightness(1.14) saturate(1.08)
+}
+
+/* Public player details */
+.player-detail-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.player-detail-head h2{margin:0 0 4px}
+.player-detail-summary{color:#b8cdd1;font-size:12px;font-weight:800}
+.detail-section-title{margin:12px 0 6px;color:#d8e8eb;font-size:12px;font-weight:950}
+.player-detail-cards{display:grid;grid-template-columns:repeat(5,minmax(72px,1fr));gap:6px}
+.detail-devcard{
+  height:108px;min-width:0;border-radius:9px;border:1px solid #52646b;position:relative;
+  padding:6px;overflow:hidden;box-shadow:0 4px 10px #0004
+}
+.detail-devcard .card-vp{font-size:18px}
+.detail-devcard .card-bonus{width:25px;height:25px;font-size:13px}
+.detail-devcard .card-level{font-size:7px}
+.detail-devcard .costs{left:5px;bottom:5px;gap:3px}
+.detail-devcard .cost{width:20px;height:20px;font-size:9px}
+.player-detail-nobles{display:flex;gap:6px;flex-wrap:wrap}
+.detail-noble{
+  width:116px;height:82px;border:1px solid #7d6d4d;border-radius:10px;
+  background:linear-gradient(145deg,#473d2d,#211e1a);padding:6px;position:relative
+}
+.detail-noble .vp{position:absolute;right:6px;top:4px;font-size:20px;font-weight:900;color:#f5d97c}
+.detail-noble .crown{font-size:20px}
+.detail-noble .reqs{margin-top:10px;gap:4px;flex-wrap:nowrap}
+.detail-noble .req{width:25px;min-width:25px;height:25px;padding:0;font-size:13px}
+.detail-empty{
+  grid-column:1/-1;padding:12px;border:1px dashed #36515b;border-radius:8px;
+  color:#81999f;font-size:11px;text-align:center
+}
+
+@media (max-width:650px){
+  .player-head{gap:2px}
+  .player-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .token-total{padding:1px 3px;font-size:7px;line-height:11px}
+  .token-total-label{display:none}
+  .reserve-badge{display:inline-flex;padding:1px 3px;font-size:7px;line-height:11px}
+  .player-head .score{margin-left:auto;flex:0 0 auto}
+  .pmeta{display:none}
+  .my-token-total{font-size:9px}
+
+  .player-detail-summary{font-size:10px}
+  .detail-section-title{margin:9px 0 5px;font-size:10px}
+  .player-detail-cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+  .detail-devcard{height:91px;padding:4px;border-radius:7px}
+  .detail-devcard .card-vp{font-size:15px}
+  .detail-devcard .card-bonus{width:21px;height:21px;font-size:11px}
+  .detail-devcard .card-level{font-size:6px}
+  .detail-devcard .costs{left:3px;bottom:3px;gap:2px}
+  .detail-devcard .cost{width:17px;height:17px;font-size:8px}
+  .detail-noble{width:92px;height:67px;padding:4px}
+  .detail-noble .vp{font-size:16px}
+  .detail-noble .crown{font-size:16px}
+  .detail-noble .reqs{margin-top:7px;gap:2px}
+  .detail-noble .req{width:19px;min-width:19px;height:19px;font-size:10px}
+}
+
 </style></head><body>
-<div id="app"><header class="topbar"><div class="title">宝石の煌き <small>ONLINE v1.8</small></div><div class="room-tag" id="roomTag">未入室</div><div id="turnPill" class="turnpill">準備中</div><span class="room-tag"><span id="connDot" class="connection-dot"></span><span id="connText">未接続</span></span><button id="logBtn" class="topbtn">ログ</button><button id="ruleBtn" class="topbtn">ルール</button><button id="restartBtn" class="topbtn">部屋初期化</button></header>
+<div id="app"><header class="topbar"><div class="title">宝石の煌き <small>ONLINE v1.9</small></div><div class="room-tag" id="roomTag">未入室</div><div id="turnPill" class="turnpill">準備中</div><span class="room-tag"><span id="connDot" class="connection-dot"></span><span id="connText">未接続</span></span><button id="logBtn" class="topbtn">ログ</button><button id="ruleBtn" class="topbtn">ルール</button><button id="restartBtn" class="topbtn">部屋初期化</button></header>
 <main class="main"><aside class="panel sidebar"><div class="section-title">Players</div><div id="players" class="players"></div></aside><section class="panel board"><div><div class="section-title">貴族</div><div id="nobles" class="nobles-wrap"></div></div><div class="tiers" id="tiers"></div></section><aside class="panel bank"><div class="section-title">宝石バンク</div><div class="bank-help">自分のターンでは宝石をクリック。異なる3色、または在庫4枚以上の同色2枚です。</div><div id="tokenList" class="tokenlist"></div></aside></main>
-<section class="bottom"><div class="panel myarea"><div class="statsgrid"><div class="bigscore"><b id="myScore">0</b><span>威信ポイント</span></div><div><div class="section-title">永久ボーナス</div><div id="myBonus" class="my-bonus"></div></div><div><div class="section-title">所持トークン</div><div id="myGems" class="my-gems"></div></div></div><div class="reserved"><div class="section-title">予約カード <span id="reserveCount">0/3</span></div><div id="reservedList" class="reserved-list"></div></div></div><div class="panel statusbox"><div id="statusMain" class="status-main">部屋へ入室してください</div><div id="statusSub" class="status-sub">オンライン対戦版です。</div><div class="status-actions"><button id="clearTake" class="actionbtn">選択解除</button><button id="confirmTake" class="actionbtn primary">宝石を取る</button></div></div></section></div>
+<section class="bottom"><div class="panel myarea"><div class="statsgrid"><div class="bigscore"><b id="myScore">0</b><span>威信ポイント</span></div><div><div class="section-title">永久ボーナス</div><div id="myBonus" class="my-bonus"></div></div><div><div class="section-title token-section-title">所持トークン <span id="myTokenTotal" class="my-token-total">0/10</span></div><div id="myGems" class="my-gems"></div></div></div><div class="reserved"><div class="section-title">予約カード <span id="reserveCount">0/3</span></div><div id="reservedList" class="reserved-list"></div></div></div><div class="panel statusbox"><div id="statusMain" class="status-main">部屋へ入室してください</div><div id="statusSub" class="status-sub">オンライン対戦版です。</div><div class="status-actions"><button id="clearTake" class="actionbtn">選択解除</button><button id="confirmTake" class="actionbtn primary">宝石を取る</button></div></div></section></div>
 <div id="pendingBanner" class="pending-banner"></div><div id="scorePop" class="score-pop"><div class="name"></div><div class="gain"></div></div><div id="modalBack" class="modalback"><div id="modal" class="modal"></div></div>
 <div id="startScreen" class="online-start"><div class="online-card"><h1>宝石の煌き ONLINE</h1><div class="online-note">固定4部屋 / オンライン対戦<br>同じ部屋へ入ったプレイヤー同士で対戦します。</div><div style="display:flex;justify-content:flex-end;margin:10px 0"><button class="actionbtn" id="refreshRooms" style="flex:0 0 auto">更新</button></div><input id="playerName" class="name-input" maxlength="14" placeholder="プレイヤー名"><div class="section-title" style="margin:14px 0 7px">ROOMS</div><div id="rooms" class="rooms"></div><div id="roomHint" class="online-note" style="margin-top:10px">部屋情報を取得中…</div></div></div>
 <div id="lobbyScreen" class="lobby-screen"><div class="lobby-card"><div class="lobby-title"><h2 id="lobbyRoom">部屋</h2><span id="lobbyBadge" class="badge"></span></div><div class="online-note" style="text-align:left;margin-top:6px">2～4人で開始できます。ホストはCPUを追加できます。</div><div id="lobbyPlayers" class="lobby-players"></div><div id="hostControls" class="lobby-controls"><button id="addCpuBtn" class="actionbtn">CPU追加</button><button id="startGameBtn" class="actionbtn primary">ゲーム開始</button></div><div class="lobby-controls" style="margin-top:8px"><button id="leaveLobbyBtn" class="actionbtn">退室</button></div></div></div>
@@ -1099,21 +1176,30 @@ function renderLobby(){
 function leaveLobby(){manualClose=true;send('leave');setTimeout(()=>{try{WS?.close()}catch{};S=null;ROOM=0;$('#lobbyScreen').classList.remove('show');$('#startScreen').style.display='flex';fetchRooms()},150)}
 function gemMini(c,n){return `<span class="mini-gem"><span class="dot" style="background:${HEX[c]}"></span>${n}</span>`}
 function reqHtml(o){return COLORS.filter(c=>o[c]>0).map(c=>`<span class="req ${c}" style="background:${HEX[c]}">${o[c]}</span>`).join('')}
+function tokenCount(p){if(!p?.tokens)return 0;return COLORS.reduce((s,c)=>s+(p.tokens[c]||0),0)+(p.tokens.gold||0)}
+function ownedCardHtml(card){if(!card)return'';return `<div class="detail-devcard card-bg-${card.bonus}"><div class="card-top"><div class="card-vp">${card.vp||''}</div><div class="card-bonus" style="background:${HEX[card.bonus]}">${ICON[card.bonus]}</div></div><div class="card-level">LEVEL ${'◆'.repeat(card.level)}</div><div class="costs">${COLORS.filter(c=>card.cost[c]>0).map(c=>`<span class="cost ${c}" style="background:${HEX[c]}">${card.cost[c]}</span>`).join('')}</div></div>`}
+function ownedNobleHtml(n){return `<div class="detail-noble"><span class="crown">♛</span><span class="vp">3</span><div class="reqs">${reqHtml(n)}</div></div>`}
 function canAffordYou(card){if(!S?.you)return false;let d=0;for(const c of COLORS)d+=Math.max(0,card.cost[c]-S.you.bonus[c]-S.you.tokens[c]);return d<=S.you.tokens.gold}
 function cardHtml(card,zone='face'){if(!card)return'<div></div>';const afford=canAffordYou(card)&&isMyTurn()&&!S.pending;return `<div class="devcard card-bg-${card.bonus}${afford?' affordable':''}" data-card="${card.id}" data-zone="${zone}" data-level="${card.level}"><div class="card-top"><div class="card-vp">${card.vp||''}</div><div class="card-bonus" style="background:${HEX[card.bonus]}">${ICON[card.bonus]}</div></div><div class="card-level">LEVEL ${'◆'.repeat(card.level)}</div><div class="costs">${COLORS.filter(c=>card.cost[c]>0).map(c=>`<span class="cost ${c}" style="background:${HEX[c]}">${card.cost[c]}</span>`).join('')}</div></div>`}
 function isMyTurn(){return S?.players?.[S.turn]?.id===MY_ID&&!S.over}
 function renderGame(){
   const me=S.you;const current=S.players[S.turn];$('#turnPill').textContent=S.over?'ゲーム終了':`${current?.name||'-'}の手番 / R${S.round}`;
-  $('#players').innerHTML=S.players.map((p,i)=>`<div class="player ${i===S.turn?'active':''} ${!p.connected&&!p.cpu?'disconnected':''}"><div class="player-head"><span>${escapeHtml(p.name)}</span>${p.cpu?'<span class="cpu">CPU</span>':''}<span class="score">${p.score}</span></div><div class="minirow"><span class="rowlabel">ボーナス</span>${COLORS.map(c=>gemMini(c,p.bonus[c])).join('')}</div><div class="minirow"><span class="rowlabel">所持トークン</span>${COLORS.map(c=>gemMini(c,p.tokens[c])).join('')}${gemMini('gold',p.tokens.gold)}</div><div class="pmeta"><span>購入 ${p.cardsCount}枚</span><span>予約 ${p.reservedCount}/3</span><span>貴族 ${p.noblesCount}</span></div></div>`).join('');
+  $('#players').innerHTML=S.players.map((p,i)=>`<div class="player ${i===S.turn?'active':''} ${!p.connected&&!p.cpu?'disconnected':''}" data-player-id="${p.id}" title="${escapeHtml(p.name)}の公開情報を見る"><div class="player-head"><span class="player-name">${escapeHtml(p.name)}</span>${p.cpu?'<span class="cpu">CPU</span>':''}<span class="token-total"><span class="token-total-label">宝石 </span>${tokenCount(p)}/10</span><span class="score">${p.score}</span><span class="reserve-badge">予約 ${p.reservedCount}/3</span></div><div class="minirow"><span class="rowlabel">ボーナス</span>${COLORS.map(c=>gemMini(c,p.bonus[c])).join('')}</div><div class="minirow"><span class="rowlabel">所持トークン</span>${COLORS.map(c=>gemMini(c,p.tokens[c])).join('')}${gemMini('gold',p.tokens.gold)}</div><div class="pmeta"><span>購入 ${p.cardsCount}枚</span><span>予約 ${p.reservedCount}/3</span><span>貴族 ${p.noblesCount}</span></div></div>`).join('');
   $('#nobles').innerHTML=S.nobles.map(n=>`<div class="noble"><span class="crown">♛</span><span class="vp">3</span><div class="reqs">${reqHtml(n)}</div></div>`).join('')||'<div style="color:#829ba0;padding:20px">貴族は残っていません</div>';
   $('#tiers').innerHTML=[3,2,1].map(l=>`<div class="tier-row"><div class="deck" data-deck="${l}"><div class="deck-level">${'◆'.repeat(l)}</div><div class="deck-count">残り ${S.decksCount[l]}</div><div class="deck-count">クリックで予約</div></div>${S.face[l].map(c=>cardHtml(c,'face')).join('')}</div>`).join('');
   $('#tokenList').innerHTML=[...COLORS,'gold'].map(c=>`<div class="token ${c} ${(takeSel[c]||0)?'sel':''}" data-token="${c}" style="background:${HEX[c]}"><span class="gemicon">${ICON[c]}</span><span class="tname">${JP[c]}</span><span class="count">${S.bank[c]}${takeSel[c]?` <small>+${takeSel[c]}</small>`:''}</span></div>`).join('');
-  $('#myScore').textContent=me?.score||0;$('#myBonus').innerHTML=COLORS.map(c=>gemMini(c,me?.bonus?.[c]||0)).join('');$('#myGems').innerHTML=COLORS.map(c=>gemMini(c,me?.tokens?.[c]||0)).join('')+gemMini('gold',me?.tokens?.gold||0);$('#reserveCount').textContent=`${me?.reservedCount||0}/3`;$('#reservedList').innerHTML=(me?.reserved||[]).map(c=>cardHtml(c,'reserved')).join('')||'<div style="font-size:11px;color:#789098;padding:18px 4px">予約カードなし</div>';
+  $('#myScore').textContent=me?.score||0;$('#myBonus').innerHTML=COLORS.map(c=>gemMini(c,me?.bonus?.[c]||0)).join('');$('#myGems').innerHTML=COLORS.map(c=>gemMini(c,me?.tokens?.[c]||0)).join('')+gemMini('gold',me?.tokens?.gold||0);$('#myTokenTotal').textContent=`${tokenCount(me)}/10`;$('#reserveCount').textContent=`${me?.reservedCount||0}/3`;$('#reservedList').innerHTML=(me?.reserved||[]).map(c=>cardHtml(c,'reserved')).join('')||'<div style="font-size:11px;color:#789098;padding:18px 4px">予約カードなし</div>';
   updateStatus();bindDynamic();renderPending();if(S.over)showGameOver();
 }
 function updateStatus(){if(!S||S.phase!=='game')return;const s=$('#statusMain'),sub=$('#statusSub');if(S.over){s.textContent='ゲーム終了';sub.textContent='部屋を初期化すると新しいゲームを開始できます。';return}if(S.pending?.playerId===MY_ID){s.textContent=S.pending.type==='discard'?`トークンを${S.pending.count}枚返却してください`:'訪問する貴族を選択してください';sub.textContent='この処理が終わるまで手番は進みません。';return}if(!isMyTurn()){s.textContent=`${S.players[S.turn]?.name}の手番です`;sub.textContent='相手の行動を待っています。';return}const n=Object.values(takeSel).reduce((a,b)=>a+b,0);s.textContent=n?`宝石を ${n} 枚選択中`:'あなたの手番です';sub.textContent=n?'選択内容を確認して「宝石を取る」を押してください。':'宝石取得 / 購入 / 予約 のどれか1アクションです。'}
-function bindDynamic(){$$('.devcard').forEach(el=>el.onclick=()=>{if(!isMyTurn()||S.pending)return;const card=findCard(el.dataset.card,el.dataset.zone);openCardModal(card,el.dataset.zone)});$$('.deck').forEach(el=>el.onclick=()=>{if(!isMyTurn()||S.pending)return;openDeckModal(+el.dataset.deck)});$$('.token').forEach(el=>el.onclick=()=>selectToken(el.dataset.token))}
+function bindDynamic(){$$('.devcard').forEach(el=>el.onclick=()=>{if(!isMyTurn()||S.pending)return;const card=findCard(el.dataset.card,el.dataset.zone);openCardModal(card,el.dataset.zone)});$$('.deck').forEach(el=>el.onclick=()=>{if(!isMyTurn()||S.pending)return;openDeckModal(+el.dataset.deck)});$$('.token').forEach(el=>el.onclick=()=>selectToken(el.dataset.token));$$('.player[data-player-id]').forEach(el=>el.onclick=()=>{if(S?.pending?.playerId===MY_ID)return;openPlayerDetails(el.dataset.playerId)})}
 function findCard(id,zone){if(zone==='reserved')return S.you.reserved.find(c=>c.id===id);for(const l of [1,2,3]){const c=S.face[l].find(x=>x.id===id);if(c)return c}}
+function openPlayerDetails(playerId){
+  const p=S?.players?.find(x=>x.id===playerId);if(!p)return;
+  const cards=p.cards||[],nobles=p.nobles||[];
+  openModal(`<div class="player-detail-head"><div><h2>${escapeHtml(p.name)}</h2><div class="player-detail-summary">威信 ${p.score}点　宝石 ${tokenCount(p)}/10　予約 ${p.reservedCount}/3</div></div></div><div class="detail-section-title">購入した発展カード　${p.cardsCount}枚</div><div class="player-detail-cards">${cards.length?cards.map(ownedCardHtml).join(''):'<div class="detail-empty">まだ購入していません</div>'}</div><div class="detail-section-title">獲得した貴族　${p.noblesCount}枚</div><div class="player-detail-nobles">${nobles.length?nobles.map(ownedNobleHtml).join(''):'<div class="detail-empty">まだ獲得していません</div>'}</div><div class="modal-actions"><button class="actionbtn primary" id="mClose">閉じる</button></div>`);
+  $('#mClose').onclick=closeModal;
+}
 function openCardModal(card,zone){const aff=canAffordYou(card),rok=S.you.reservedCount<3&&zone==='face';openModal(`<h2>発展カード</h2><div class="modal-card">${cardHtml(card,zone)}</div><p>永久ボーナス：${JP[card.bonus]} ／ 威信：${card.vp}点</p><div class="modal-actions"><button class="actionbtn ok" id="mBuy" ${aff?'':'disabled'}>購入${aff?'':'（不足）'}</button>${zone==='face'?`<button class="actionbtn primary" id="mReserve" ${rok?'':'disabled'}>予約</button>`:''}<button class="actionbtn" id="mClose">戻る</button></div>`);$('#mClose').onclick=closeModal;if(aff)$('#mBuy').onclick=()=>{closeModal();send('buy',{cardId:card.id})};if(rok)$('#mReserve').onclick=()=>{closeModal();send('reserve_face',{cardId:card.id})}}
 function openDeckModal(level){const ok=S.you.reservedCount<3&&S.decksCount[level]>0;openModal(`<h2>レベル${level}の山札</h2><p>一番上のカードを内容を見ずに予約します。黄金が残っていれば1枚受け取ります。</p><div class="modal-actions"><button class="actionbtn primary" id="blindRes" ${ok?'':'disabled'}>山札から予約</button><button class="actionbtn" id="mClose">戻る</button></div>`);$('#mClose').onclick=closeModal;if(ok)$('#blindRes').onclick=()=>{closeModal();send('reserve_deck',{level})}}
 function selectToken(c){if(!isMyTurn()||S.pending||c==='gold'||S.bank[c]<=0)return;const vals=COLORS.filter(x=>takeSel[x]);if(takeSel[c]){if(takeSel[c]===1&&vals.length===1&&S.bank[c]>=4)takeSel[c]=2;else delete takeSel[c]}else{if(vals.some(x=>takeSel[x]===2)||vals.length>=3)return;takeSel[c]=1}renderGame()}
