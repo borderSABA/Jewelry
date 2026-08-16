@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>宝石の煌き Online v1.0</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>宝石の煌き ONLINE v1.4</title><style>
 :root{--bg:#07131a;--panel:#10222c;--line:#2d4a56;--text:#edf7f7;--muted:#9db3b8;--accent:#e1b95a;--white:#f4f0e7;--blue:#4088ff;--green:#37b66d;--red:#df4d56;--black:#25262b;--gold:#d7aa39}
 *{box-sizing:border-box}html,body{height:100%;margin:0;background:radial-gradient(circle at 50% 0,#12313c 0,#07131a 55%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
 button{font:inherit;color:inherit}button:disabled{opacity:.35;cursor:not-allowed!important}
@@ -42,8 +42,466 @@ text-align:center;pointer-events:none;opacity:0;
 
 .online-start{position:fixed;inset:0;z-index:120;background:radial-gradient(circle at 50% 15%,#17414e,#07131a 60%);display:flex;align-items:center;justify-content:center;padding:18px}.online-card{width:min(860px,96vw);max-height:94vh;overflow:auto;border:1px solid #49646e;border-radius:22px;background:#0d2029f2;padding:22px;box-shadow:0 25px 80px #0008}.online-card h1{text-align:center;color:#f0ce73;margin:0 0 4px;font-size:32px}.online-note{text-align:center;color:#9db3b8;font-size:12px;line-height:1.55}.server-row{display:flex;gap:7px;margin:15px 0}.server-row input,.name-input{width:100%;background:#07171e;border:1px solid #365560;color:#edf7f7;border-radius:10px;padding:10px 11px}.rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.room-card{border:1px solid #355560;border-radius:14px;background:#102832;padding:11px;min-height:118px}.room-card h3{margin:0 0 5px;color:#f0cd70}.room-status{font-size:11px;color:#b9cdd1;line-height:1.5;min-height:35px}.room-actions{display:flex;gap:5px;margin-top:8px}.room-actions button{flex:1}.danger{border-color:#7a4242!important;background:#3a1d20!important}.lobby-screen{position:fixed;inset:0;z-index:110;background:#061119e8;display:none;align-items:center;justify-content:center;padding:18px}.lobby-screen.show{display:flex}.lobby-card{width:min(650px,95vw);border:1px solid #46616b;border-radius:20px;background:#0d2029;padding:20px}.lobby-title{display:flex;align-items:center;gap:10px}.lobby-title h2{margin:0;color:#f0cd70}.lobby-title .badge{margin-left:auto;border:1px solid #42616c;border-radius:999px;padding:6px 10px;font-size:11px}.lobby-players{display:flex;flex-direction:column;gap:7px;margin:15px 0}.lobby-player{display:flex;align-items:center;gap:8px;border:1px solid #2d4a56;border-radius:11px;padding:10px;background:#0a1a22}.lobby-player .host{font-size:10px;color:#f0cd70}.lobby-player .conn{margin-left:auto;font-size:10px;color:#91aaaF}.lobby-controls{display:flex;gap:8px;flex-wrap:wrap}.connection-dot{width:9px;height:9px;border-radius:50%;background:#a54343;display:inline-block;margin-right:5px}.connection-dot.on{background:#48b97a}.room-tag{font-size:11px;color:#9db3b8}.hidden{display:none!important}.pending-banner{position:fixed;left:50%;top:68px;transform:translateX(-50%);z-index:30;padding:8px 14px;border-radius:999px;background:#5b4116;border:1px solid #d2a947;font-size:12px;font-weight:850;display:none}.pending-banner.show{display:block}.player.disconnected{opacity:.55}.player .rowlabel{font-size:10px;color:#9db3b8;min-width:78px}.minirow{overflow:hidden}.topbar .room-tag{white-space:nowrap}.gameover-box{text-align:center;padding:10px}.gameover-box .winner{font-size:25px;color:#f0cd70;font-weight:950}
 @media(max-width:850px){.rooms{grid-template-columns:repeat(2,1fr)}.server-row{flex-direction:column}.online-card{padding:14px}}
+
+/* ===== Smartphone portrait UI v1.4 ===== */
+@media (max-width:650px){
+  html,body{
+    width:100%;
+    height:100%;
+    height:100dvh;
+    overflow:hidden!important;
+    overscroll-behavior:none;
+  }
+  body{touch-action:manipulation}
+  #app{
+    height:100dvh;
+    min-height:0;
+    overflow:hidden;
+  }
+
+  /* top bar */
+  .topbar{
+    height:42px;
+    flex:0 0 42px;
+    padding:3px 5px;
+    gap:4px;
+    overflow:hidden;
+  }
+  .title{
+    font-size:11px;
+    max-width:72px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .title small{display:none}
+  .topbar #roomTag{
+    font-size:8px;
+    max-width:34px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .topbar .turnpill{
+    margin-left:0;
+    min-width:0;
+    max-width:86px;
+    padding:5px 6px;
+    font-size:9px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .topbar > span.room-tag{font-size:0; width:11px; flex:0 0 11px}
+  #connText{display:none}
+  .connection-dot{margin:0;width:8px;height:8px}
+  .topbtn{
+    flex:0 0 auto;
+    padding:5px 6px;
+    border-radius:7px;
+    font-size:9px;
+    white-space:nowrap;
+  }
+
+  /* 1 screen: players / market / bank */
+  .main{
+    min-height:0;
+    flex:1 1 auto;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:92px minmax(0,1fr) 82px;
+    gap:4px;
+    padding:4px 4px 0;
+    overflow:hidden;
+  }
+  .sidebar{
+    grid-row:1;
+    order:initial;
+    padding:3px;
+    gap:2px;
+    overflow:hidden;
+  }
+  .sidebar > .section-title{display:none}
+  .players{
+    width:100%;
+    height:100%;
+    min-height:0;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-auto-rows:minmax(0,1fr);
+    gap:3px;
+    justify-content:stretch;
+    overflow:hidden;
+  }
+  .player{
+    min-height:0;
+    padding:3px 5px;
+    border-radius:7px;
+    justify-content:flex-start;
+    overflow:hidden;
+  }
+  .player.active{box-shadow:0 0 0 1px #dbb85c88 inset}
+  .player-head{
+    gap:3px;
+    min-height:15px;
+    font-size:10px;
+    line-height:1;
+    white-space:nowrap;
+  }
+  .player-head > span:first-child{
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .player-head .score{font-size:15px}
+  .cpu{font-size:7px;padding:1px 3px}
+  .player .minirow{
+    min-width:0;
+    gap:2px;
+    margin-top:1px;
+    overflow:hidden;
+  }
+  .player .rowlabel{
+    min-width:13px;
+    width:13px;
+    flex:0 0 13px;
+    font-size:0;
+    text-align:center;
+  }
+  .player .player-head + .minirow .rowlabel::after{
+    content:"B";
+    font-size:7px;
+    font-weight:900;
+    color:#9db3b8;
+  }
+  .player .player-head + .minirow + .minirow .rowlabel::after{
+    content:"T";
+    font-size:7px;
+    font-weight:900;
+    color:#9db3b8;
+  }
+  .mini-gem{
+    min-width:18px;
+    padding:1px 2px;
+    gap:2px;
+    border-radius:4px;
+    font-size:8px;
+    line-height:12px;
+  }
+  .dot{width:6px;height:6px}
+  .pmeta{display:none}
+
+  /* market */
+  .board{
+    grid-row:2;
+    order:initial;
+    min-height:0!important;
+    padding:3px;
+    gap:2px;
+    overflow:hidden;
+  }
+  .board .section-title{
+    font-size:8px;
+    margin:0 2px 1px;
+    line-height:10px;
+  }
+  .nobles-wrap{
+    height:52px;
+    min-height:52px;
+    gap:3px;
+    overflow:hidden;
+  }
+  .noble{
+    width:61px;
+    min-width:61px;
+    height:50px;
+    padding:3px;
+    border-radius:6px;
+  }
+  .noble .vp{right:3px;top:2px;font-size:13px}
+  .noble .crown{font-size:13px}
+  .noble .reqs{gap:2px;margin-top:3px}
+  .noble .req{
+    height:14px;
+    min-width:14px;
+    padding:0 2px;
+    border-radius:3px;
+    font-size:7px;
+  }
+  .tiers{gap:3px;min-height:0}
+  .tier-row{
+    min-height:0!important;
+    grid-template-columns:40px repeat(4,minmax(0,1fr));
+    gap:3px;
+  }
+  .deck{
+    min-width:0;
+    border-radius:6px;
+    background:repeating-linear-gradient(135deg,#173541 0,#173541 5px,#122b35 5px,#122b35 10px);
+  }
+  .deck-level{font-size:9px;letter-spacing:0}
+  .deck-count{font-size:7px;margin-top:2px}
+  .deck .deck-count:last-child{display:none}
+  .devcard{
+    min-width:0;
+    min-height:0;
+    padding:3px;
+    border-radius:6px;
+  }
+  .devcard:hover{transform:none}
+  .card-vp{font-size:14px}
+  .card-bonus{
+    width:19px;
+    height:19px;
+    border-width:1px;
+    font-size:10px;
+  }
+  .card-level{font-size:6px}
+  .costs{left:3px;bottom:3px;gap:2px;max-width:96%}
+  .cost{
+    width:16px;
+    height:16px;
+    font-size:7px;
+    border-width:1px;
+  }
+
+  /* gem bank */
+  .bank{
+    grid-row:3;
+    order:initial;
+    min-height:0;
+    padding:3px;
+    gap:3px;
+    overflow:hidden;
+  }
+  .bank > .section-title{
+    font-size:8px;
+    line-height:9px;
+    margin:0 2px;
+  }
+  .bank-help{display:none}
+  .tokenlist{
+    min-height:0;
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:3px;
+    justify-content:stretch;
+  }
+  .token{
+    width:auto!important;
+    min-width:0!important;
+    height:36px;
+    padding:1px 2px;
+    gap:0;
+    border-radius:8px;
+    border-width:1px;
+    flex-direction:column;
+    justify-content:center;
+    box-shadow:inset 0 0 8px #0004;
+  }
+  .token .gemicon{font-size:12px;line-height:12px}
+  .token .tname{display:none}
+  .token .count{
+    margin:0;
+    font-size:13px;
+    line-height:13px;
+  }
+  .token.sel{outline-width:2px}
+  .take-controls{height:27px;gap:3px}
+  .bank .actionbtn{
+    padding:3px 5px;
+    border-radius:6px;
+    font-size:9px;
+  }
+
+  /* fixed lower player area */
+  .bottom{
+    height:150px;
+    flex:0 0 150px;
+    margin:4px;
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows:94px 52px;
+    gap:4px;
+    overflow:hidden;
+  }
+  .myarea{
+    margin:0!important;
+    min-height:0;
+    padding:4px;
+    display:grid;
+    grid-template-columns:174px minmax(0,1fr);
+    gap:4px;
+    overflow:hidden;
+  }
+  .statsgrid{
+    min-width:0;
+    gap:1px;
+    overflow:hidden;
+  }
+  .bigscore{gap:4px;height:21px}
+  .bigscore b{font-size:19px;line-height:19px}
+  .bigscore span{font-size:7px;padding-bottom:1px}
+  .myarea .section-title{
+    font-size:7px;
+    margin:0 1px;
+    line-height:9px;
+  }
+  .my-gems,.my-bonus{
+    gap:2px;
+    overflow:hidden;
+  }
+  .myarea .mini-gem{
+    min-width:20px;
+    padding:1px 3px;
+    font-size:8px;
+  }
+  .reserved{min-width:0;overflow:hidden}
+  .reserved-list{
+    height:76px;
+    gap:3px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+  }
+  .reserved-list::-webkit-scrollbar{display:none}
+  .reserved-list .devcard{
+    width:62px;
+    min-width:62px;
+    height:73px;
+  }
+  .statusbox{
+    min-height:0!important;
+    padding:4px 5px;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 74px;
+    grid-template-rows:18px minmax(0,1fr);
+    gap:1px 4px;
+    overflow:hidden;
+  }
+  .status-main{
+    grid-column:1;
+    grid-row:1;
+    font-size:10px;
+    line-height:16px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .status-sub{
+    grid-column:1;
+    grid-row:2;
+    font-size:8px;
+    line-height:11px;
+    overflow:hidden;
+  }
+  .status-actions{
+    grid-column:2;
+    grid-row:1/3;
+    margin:0;
+  }
+  .status-actions .actionbtn{
+    width:100%;
+    height:100%;
+    padding:3px;
+    border-radius:6px;
+    font-size:8px;
+  }
+
+  /* overlays */
+  .pending-banner{
+    top:46px;
+    max-width:92vw;
+    padding:5px 9px;
+    font-size:9px;
+  }
+  .score-pop{
+    min-width:210px;
+    padding:13px 18px;
+  }
+  .score-pop .name{font-size:14px}
+  .score-pop .gain{font-size:30px}
+  .modalback{padding:6px}
+  .modal{
+    width:calc(100vw - 12px);
+    max-height:calc(100dvh - 12px);
+    padding:10px;
+    border-radius:12px;
+  }
+  .modal h2{font-size:16px}
+  .modal p{font-size:10px}
+  .modal-card{height:150px;width:118px;margin:6px auto}
+  .modal-actions{gap:5px;margin-top:8px}
+  .modal-actions button{
+    min-width:86px;
+    padding:8px 6px;
+    font-size:10px;
+  }
+  .discard-grid{grid-template-columns:repeat(2,1fr);gap:5px}
+  .discard-item{padding:6px;font-size:10px;gap:4px}
+  .discard-item button{width:27px;height:27px}
+  .choice-list{gap:5px}
+  .choice-list .noble{height:62px;width:72px;min-width:72px}
+
+  /* title / lobby */
+  .online-start,.lobby-screen{
+    padding:6px;
+    overflow:hidden;
+  }
+  .online-card{
+    width:100%;
+    max-height:calc(100dvh - 12px);
+    padding:10px;
+    border-radius:14px;
+    overflow:auto;
+  }
+  .online-card h1{font-size:23px}
+  .online-note{font-size:9px;line-height:1.35}
+  .name-input{padding:8px 9px;font-size:12px}
+  .rooms{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:5px;
+  }
+  .room-card{
+    min-height:88px;
+    padding:6px;
+    border-radius:9px;
+  }
+  .room-card h3{font-size:13px;margin-bottom:2px}
+  .room-status{min-height:27px;font-size:8px;line-height:1.35}
+  .room-actions{gap:3px;margin-top:4px}
+  .room-actions .actionbtn{padding:6px 3px;font-size:9px}
+  .lobby-card{
+    width:100%;
+    max-height:calc(100dvh - 12px);
+    overflow:auto;
+    padding:10px;
+    border-radius:14px;
+  }
+  .lobby-title h2{font-size:18px}
+  .lobby-players{gap:4px;margin:8px 0}
+  .lobby-player{padding:7px;font-size:11px}
+  .lobby-controls{gap:5px}
+  .lobby-controls .actionbtn{padding:8px 5px;font-size:10px}
+}
+
+/* Short smartphones: compress vertical spacing further */
+@media (max-width:650px) and (max-height:720px){
+  .topbar{height:38px;flex-basis:38px}
+  .main{grid-template-rows:78px minmax(0,1fr) 72px}
+  .bottom{height:132px;flex-basis:132px;grid-template-rows:82px 46px}
+  .nobles-wrap{height:44px;min-height:44px}
+  .noble{height:42px}
+  .player{padding:2px 4px}
+  .player-head{font-size:9px}
+  .player-head .score{font-size:13px}
+  .player .minirow{margin-top:0}
+  .token{height:31px}
+  .take-controls{height:24px}
+  .reserved-list{height:64px}
+  .reserved-list .devcard{height:61px}
+  .statusbox{grid-template-rows:16px minmax(0,1fr)}
+}
+
 </style></head><body>
-<div id="app"><header class="topbar"><div class="title">宝石の煌き <small>ONLINE v1.3</small></div><div class="room-tag" id="roomTag">未入室</div><div id="turnPill" class="turnpill">準備中</div><span class="room-tag"><span id="connDot" class="connection-dot"></span><span id="connText">未接続</span></span><button id="logBtn" class="topbtn">ログ</button><button id="ruleBtn" class="topbtn">ルール</button><button id="restartBtn" class="topbtn">部屋初期化</button></header>
+<div id="app"><header class="topbar"><div class="title">宝石の煌き <small>ONLINE v1.4</small></div><div class="room-tag" id="roomTag">未入室</div><div id="turnPill" class="turnpill">準備中</div><span class="room-tag"><span id="connDot" class="connection-dot"></span><span id="connText">未接続</span></span><button id="logBtn" class="topbtn">ログ</button><button id="ruleBtn" class="topbtn">ルール</button><button id="restartBtn" class="topbtn">部屋初期化</button></header>
 <main class="main"><aside class="panel sidebar"><div class="section-title">Players</div><div id="players" class="players"></div></aside><section class="panel board"><div><div class="section-title">貴族</div><div id="nobles" class="nobles-wrap"></div></div><div class="tiers" id="tiers"></div></section><aside class="panel bank"><div class="section-title">宝石バンク</div><div class="bank-help">自分のターンでは宝石をクリック。異なる3色、または在庫4枚以上の同色2枚です。</div><div id="tokenList" class="tokenlist"></div><div class="take-controls"><button id="clearTake" class="actionbtn">選択解除</button><button id="confirmTake" class="actionbtn primary">宝石を取る</button></div></aside></main>
 <section class="bottom"><div class="panel myarea"><div class="statsgrid"><div class="bigscore"><b id="myScore">0</b><span>威信ポイント</span></div><div><div class="section-title">永久ボーナス</div><div id="myBonus" class="my-bonus"></div></div><div><div class="section-title">所持トークン</div><div id="myGems" class="my-gems"></div></div></div><div class="reserved"><div class="section-title">予約カード <span id="reserveCount">0/3</span></div><div id="reservedList" class="reserved-list"></div></div></div><div class="panel statusbox"><div id="statusMain" class="status-main">部屋へ入室してください</div><div id="statusSub" class="status-sub">オンライン対戦版です。</div><div class="status-actions"><button id="cancelSelect" class="actionbtn">選択解除</button></div></div></section></div>
 <div id="pendingBanner" class="pending-banner"></div><div id="scorePop" class="score-pop"><div class="name"></div><div class="gain"></div></div><div id="modalBack" class="modalback"><div id="modal" class="modal"></div></div>
