@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>宝石の煌き ONLINE v1.9</title><style>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>宝石の煌き ONLINE v2.0</title><style>
 :root{--bg:#07131a;--panel:#10222c;--line:#2d4a56;--text:#edf7f7;--muted:#9db3b8;--accent:#e1b95a;--white:#f4f0e7;--blue:#4088ff;--green:#37b66d;--red:#df4d56;--black:#25262b;--gold:#d7aa39}
 *{box-sizing:border-box}html,body{height:100%;margin:0;background:radial-gradient(circle at 50% 0,#12313c 0,#07131a 55%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden}
 button{font:inherit;color:inherit}button:disabled{opacity:.35;cursor:not-allowed!important}
@@ -1122,11 +1122,235 @@ text-align:center;pointer-events:none;opacity:0;
   .detail-noble .req{width:19px;min-width:19px;height:19px;font-size:10px}
 }
 
+
+/* ===== v2.0 synchronized action animations ===== */
+.player{
+  position:relative;
+}
+
+/* Token-take POP inside the player frame */
+.player-take-pop{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(.72);
+  z-index:20;
+  min-width:150px;
+  max-width:92%;
+  padding:8px 10px;
+  border:1px solid #e8cb73;
+  border-radius:11px;
+  background:#07151cf2;
+  box-shadow:0 10px 26px #000a,0 0 0 2px #e8cb7330 inset;
+  text-align:center;
+  pointer-events:none;
+  animation:playerTakePop 1.28s ease both;
+}
+.player-take-label{
+  margin-bottom:5px;
+  color:#f0d37e;
+  font-size:10px;
+  font-weight:950;
+  letter-spacing:.08em;
+}
+.player-take-gems{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  flex-wrap:nowrap;
+}
+.take-gem{
+  min-width:37px;
+  height:30px;
+  padding:0 6px;
+  border:1px solid #ffffff73;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  color:#fff;
+  text-shadow:0 1px 2px #000;
+  box-shadow:inset 0 0 8px #0006;
+  font-size:12px;
+  font-weight:950;
+}
+.take-gem.white{color:#172229;text-shadow:none}
+@keyframes playerTakePop{
+  0%{opacity:0;transform:translate(-50%,-40%) scale(.65)}
+  12%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
+  24%{transform:translate(-50%,-50%) scale(1)}
+  76%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-62%) scale(.94)}
+}
+
+/* Central purchase / noble overlay */
+.action-pop{
+  position:fixed;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%) scale(.78);
+  z-index:90;
+  width:min(420px,88vw);
+  min-height:290px;
+  padding:18px 22px 20px;
+  border:2px solid #e6c66d;
+  border-radius:20px;
+  background:linear-gradient(180deg,#142f39f7,#07171ef7);
+  box-shadow:0 26px 90px #000d,0 0 0 3px #e6c66d25 inset;
+  opacity:0;
+  pointer-events:none;
+  text-align:center;
+}
+.action-pop.show{
+  animation:actionPop2s 2s ease both;
+}
+.action-pop-title{
+  margin-bottom:12px;
+  color:#f2d479;
+  font-size:23px;
+  font-weight:950;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.action-pop-visual{
+  min-height:178px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.action-pop-score{
+  margin-top:9px;
+  color:#ffe39a;
+  font-size:35px;
+  line-height:1;
+  font-weight:1000;
+  text-shadow:0 3px 12px #000;
+}
+.action-card{
+  width:156px;
+  height:184px;
+  position:relative;
+  padding:10px;
+  border:2px solid #ffffff55;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 14px 30px #0009;
+  text-align:left;
+}
+.action-card .card-vp{font-size:31px}
+.action-card .card-bonus{width:42px;height:42px;font-size:22px}
+.action-card .card-level{font-size:10px}
+.action-card .costs{left:9px;bottom:9px;gap:5px}
+.action-card .cost{width:31px;height:31px;font-size:14px}
+.action-noble{
+  width:210px;
+  height:145px;
+  padding:13px;
+  position:relative;
+  border:2px solid #a68c59;
+  border-radius:16px;
+  background:linear-gradient(145deg,#554936,#221e19);
+  box-shadow:0 14px 30px #0009;
+  text-align:left;
+}
+.action-noble .crown{font-size:36px}
+.action-noble .vp{
+  position:absolute;
+  right:13px;
+  top:8px;
+  color:#f5d97c;
+  font-size:34px;
+  font-weight:950;
+}
+.action-noble .reqs{
+  margin-top:25px;
+  gap:7px;
+  flex-wrap:nowrap;
+}
+.action-noble .req{
+  width:37px;
+  min-width:37px;
+  height:37px;
+  padding:0;
+  font-size:18px;
+}
+@keyframes actionPop2s{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.72)}
+  8%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}
+  16%{transform:translate(-50%,-50%) scale(1)}
+  84%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-55%) scale(.96)}
+}
+
+@media (max-width:650px){
+  .player-take-pop{
+    min-width:120px;
+    padding:5px 6px;
+    border-radius:8px;
+  }
+  .player-take-label{
+    margin-bottom:3px;
+    font-size:8px;
+  }
+  .player-take-gems{gap:3px}
+  .take-gem{
+    min-width:29px;
+    height:23px;
+    padding:0 4px;
+    font-size:9px;
+  }
+
+  .action-pop{
+    width:min(330px,91vw);
+    min-height:255px;
+    padding:14px 16px 16px;
+    border-radius:16px;
+  }
+  .action-pop-title{
+    margin-bottom:8px;
+    font-size:18px;
+  }
+  .action-pop-visual{
+    min-height:156px;
+  }
+  .action-pop-score{
+    margin-top:6px;
+    font-size:30px;
+  }
+  .action-card{
+    width:137px;
+    height:160px;
+    padding:8px;
+    border-radius:12px;
+  }
+  .action-card .card-vp{font-size:27px}
+  .action-card .card-bonus{width:36px;height:36px;font-size:19px}
+  .action-card .costs{left:7px;bottom:7px;gap:4px}
+  .action-card .cost{width:27px;height:27px;font-size:12px}
+  .action-noble{
+    width:184px;
+    height:126px;
+    padding:10px;
+  }
+  .action-noble .crown{font-size:30px}
+  .action-noble .vp{right:10px;top:7px;font-size:29px}
+  .action-noble .reqs{margin-top:21px;gap:5px}
+  .action-noble .req{
+    width:32px;
+    min-width:32px;
+    height:32px;
+    font-size:16px;
+  }
+}
+
 </style></head><body>
-<div id="app"><header class="topbar"><div class="title">宝石の煌き <small>ONLINE v1.9</small></div><div class="room-tag" id="roomTag">未入室</div><div id="turnPill" class="turnpill">準備中</div><span class="room-tag"><span id="connDot" class="connection-dot"></span><span id="connText">未接続</span></span><button id="logBtn" class="topbtn">ログ</button><button id="ruleBtn" class="topbtn">ルール</button><button id="restartBtn" class="topbtn">部屋初期化</button></header>
+<div id="app"><header class="topbar"><div class="title">宝石の煌き <small>ONLINE v2.0</small></div><div class="room-tag" id="roomTag">未入室</div><div id="turnPill" class="turnpill">準備中</div><span class="room-tag"><span id="connDot" class="connection-dot"></span><span id="connText">未接続</span></span><button id="logBtn" class="topbtn">ログ</button><button id="ruleBtn" class="topbtn">ルール</button><button id="restartBtn" class="topbtn">部屋初期化</button></header>
 <main class="main"><aside class="panel sidebar"><div class="section-title">Players</div><div id="players" class="players"></div></aside><section class="panel board"><div><div class="section-title">貴族</div><div id="nobles" class="nobles-wrap"></div></div><div class="tiers" id="tiers"></div></section><aside class="panel bank"><div class="section-title">宝石バンク</div><div class="bank-help">自分のターンでは宝石をクリック。異なる3色、または在庫4枚以上の同色2枚です。</div><div id="tokenList" class="tokenlist"></div></aside></main>
 <section class="bottom"><div class="panel myarea"><div class="statsgrid"><div class="bigscore"><b id="myScore">0</b><span>威信ポイント</span></div><div><div class="section-title">永久ボーナス</div><div id="myBonus" class="my-bonus"></div></div><div><div class="section-title token-section-title">所持トークン <span id="myTokenTotal" class="my-token-total">0/10</span></div><div id="myGems" class="my-gems"></div></div></div><div class="reserved"><div class="section-title">予約カード <span id="reserveCount">0/3</span></div><div id="reservedList" class="reserved-list"></div></div></div><div class="panel statusbox"><div id="statusMain" class="status-main">部屋へ入室してください</div><div id="statusSub" class="status-sub">オンライン対戦版です。</div><div class="status-actions"><button id="clearTake" class="actionbtn">選択解除</button><button id="confirmTake" class="actionbtn primary">宝石を取る</button></div></div></section></div>
-<div id="pendingBanner" class="pending-banner"></div><div id="scorePop" class="score-pop"><div class="name"></div><div class="gain"></div></div><div id="modalBack" class="modalback"><div id="modal" class="modal"></div></div>
+<div id="pendingBanner" class="pending-banner"></div><div id="scorePop" class="score-pop"><div class="name"></div><div class="gain"></div></div><div id="actionPop" class="action-pop"><div id="actionPopTitle" class="action-pop-title"></div><div id="actionPopVisual" class="action-pop-visual"></div><div id="actionPopScore" class="action-pop-score"></div></div><div id="modalBack" class="modalback"><div id="modal" class="modal"></div></div>
 <div id="startScreen" class="online-start"><div class="online-card"><h1>宝石の煌き ONLINE</h1><div class="online-note">固定4部屋 / オンライン対戦<br>同じ部屋へ入ったプレイヤー同士で対戦します。</div><div style="display:flex;justify-content:flex-end;margin:10px 0"><button class="actionbtn" id="refreshRooms" style="flex:0 0 auto">更新</button></div><input id="playerName" class="name-input" maxlength="14" placeholder="プレイヤー名"><div class="section-title" style="margin:14px 0 7px">ROOMS</div><div id="rooms" class="rooms"></div><div id="roomHint" class="online-note" style="margin-top:10px">部屋情報を取得中…</div></div></div>
 <div id="lobbyScreen" class="lobby-screen"><div class="lobby-card"><div class="lobby-title"><h2 id="lobbyRoom">部屋</h2><span id="lobbyBadge" class="badge"></span></div><div class="online-note" style="text-align:left;margin-top:6px">2～4人で開始できます。ホストはCPUを追加できます。</div><div id="lobbyPlayers" class="lobby-players"></div><div id="hostControls" class="lobby-controls"><button id="addCpuBtn" class="actionbtn">CPU追加</button><button id="startGameBtn" class="actionbtn primary">ゲーム開始</button></div><div class="lobby-controls" style="margin-top:8px"><button id="leaveLobbyBtn" class="actionbtn">退室</button></div></div></div>
 <script src="config.js"></script><script>
@@ -1149,6 +1373,38 @@ function closeModal(){if(S?.pending?.playerId===MY_ID)return;$('#modalBack').cla
 $('#modalBack').addEventListener('click',e=>{if(e.target===$('#modalBack'))closeModal()});
 function toast(msg){$('#statusMain').textContent=msg;setTimeout(updateStatus,1500)}
 function showScorePopup(name,delta){if(!delta||delta<=0)return;const el=$('#scorePop');el.querySelector('.name').textContent=name;el.querySelector('.gain').textContent=`＋${delta}点`;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1700)}
+function actionCardHtml(card){
+  if(!card)return'';
+  return `<div class="action-card card-bg-${card.bonus}"><div class="card-top"><div class="card-vp">${card.vp||''}</div><div class="card-bonus" style="background:${HEX[card.bonus]}">${ICON[card.bonus]}</div></div><div class="card-level">LEVEL ${'◆'.repeat(card.level)}</div><div class="costs">${COLORS.filter(c=>card.cost[c]>0).map(c=>`<span class="cost ${c}" style="background:${HEX[c]}">${card.cost[c]}</span>`).join('')}</div></div>`;
+}
+function actionNobleHtml(n){
+  if(!n)return'';
+  return `<div class="action-noble"><span class="crown">♛</span><span class="vp">3</span><div class="reqs">${reqHtml(n)}</div></div>`;
+}
+function showActionPop(event){
+  if(!event||!['buy','noble'].includes(event.kind))return;
+  const el=$('#actionPop');
+  $('#actionPopTitle').textContent=event.kind==='buy'?`${event.playerName}が購入`:`${event.playerName}が貴族を篭絡`;
+  $('#actionPopVisual').innerHTML=event.kind==='buy'?actionCardHtml(event.card):actionNobleHtml(event.noble);
+  $('#actionPopScore').textContent=`＋${event.scoreGain||0}点`;
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2000);
+}
+function showTakePop(event){
+  if(!event?.playerId||!event.tokens)return;
+  const player=$(`.player[data-player-id="${event.playerId}"]`);
+  if(!player)return;
+  player.querySelectorAll('.player-take-pop').forEach(x=>x.remove());
+  const entries=COLORS.filter(c=>(event.tokens[c]||0)>0);
+  if(!entries.length)return;
+  const pop=document.createElement('div');
+  pop.className='player-take-pop';
+  pop.innerHTML=`<div class="player-take-label">取得</div><div class="player-take-gems">${entries.map(c=>`<span class="take-gem ${c}" style="background:${HEX[c]}"><span>${ICON[c]}</span><b>×${event.tokens[c]}</b></span>`).join('')}</div>`;
+  player.appendChild(pop);
+  setTimeout(()=>pop.remove(),1300);
+}
 async function fetchRooms(){
   const b=baseURL(); if(!b){$('#roomHint').textContent='接続先設定がありません';return}
   $('#roomHint').textContent='部屋情報を取得中…';
@@ -1165,7 +1421,7 @@ function connect(name){
   WS.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch{return}if(m.type==='welcome'){MY_ID=m.playerId;saveSession(ROOM,{playerId:m.playerId,token:m.token,name});return}if(m.type==='error'){toast(m.message);return}if(m.type==='update'){queue.push(m);processQueue()}};
   WS.onclose=e=>{$('#connText').textContent='切断';$('#connDot').classList.remove('on');if(e.code===4001){clearSession(ROOM);S=null;$('#lobbyScreen').classList.remove('show');$('#startScreen').style.display='flex';fetchRooms();alert('部屋が初期化されました');return}if(!manualClose&&ROOM){reconnectTimer=setTimeout(()=>connect(localStorage.getItem('splendor_name')||name),1800)}};
 }
-function processQueue(){if(processing||!queue.length)return;processing=true;const m=queue.shift();S=m.state;renderAll();if(m.event?.scoreGain)showScorePopup(m.event.playerName,m.event.scoreGain);const delay=m.event&&m.event.kind!=='turn'?520:120;setTimeout(()=>{processing=false;processQueue()},delay)}
+function processQueue(){if(processing||!queue.length)return;processing=true;const m=queue.shift();S=m.state;renderAll();if(m.event?.kind==='take')showTakePop(m.event);if(m.event?.kind==='buy'||m.event?.kind==='noble')showActionPop(m.event);const delay=(m.event?.kind==='buy'||m.event?.kind==='noble')?2050:m.event?.kind==='take'?1350:(m.event&&m.event.kind!=='turn'?520:120);setTimeout(()=>{processing=false;processQueue()},delay)}
 function send(type,data={}){if(!WS||WS.readyState!==1){toast('サーバーに接続されていません');return}WS.send(JSON.stringify({type,...data}))}
 function renderAll(){if(!S)return;ROOM=S.room;$('#roomTag').textContent=`部屋 ${ROOM}`;if(S.phase==='lobby'){renderLobby();return}$('#startScreen').style.display='none';$('#lobbyScreen').classList.remove('show');renderGame()}
 function renderLobby(){
